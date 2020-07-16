@@ -1,2 +1,2 @@
-# IrtazaS.github.io
+# Irtaza Syed
 Personal Web Page
