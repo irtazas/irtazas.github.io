@@ -50,7 +50,7 @@
 						<li class="current"><a class="smoothscroll" href="#intro" title="">Home</a></li>
 						<li><a class="smoothscroll" href="#about" title="">About</a></li>
 						<li><a class="smoothscroll" href="#resume" title="">Resume</a></li>
-						<li><a class="smoothscroll" href="#services" title="">Services</a></li>
+						<li><a class="smoothscroll" href="#competencies" title="">Competencies</a></li>
 						<li><a class="smoothscroll" href="#contact" title="">Contact</a></li>
 					</ul>
 				</nav>
@@ -367,9 +367,9 @@
 	</section> <!-- /features -->
 
 
-	<!-- services Section
+	<!-- Competencies Section
    ================================================== -->
-	<section id="services">
+	<section id="competencies">
 
 		<div class="overlay"></div>
 
@@ -384,15 +384,15 @@
 			</div>
 		</div> <!-- /section-intro -->
 
-		<div class="row services-content">
+		<div class="row competencies-content">
 
-			<div id="owl-slider" class="owl-carousel services-list">
+			<div id="owl-slider" class="owl-carousel competencies-list">
 
-				<div class="service">
+				<div class="competencie">
 
 					<span class="icon"><i class="fa fa-code" style='margin: 0.3rem;'></i></span>
 
-					<div class="service-content">
+					<div class="competencie-content">
 
 						<h3>Software Engineering</h3>
 
@@ -401,13 +401,13 @@
 
 					</div>
 
-				</div> <!-- /service -->
+				</div> <!-- /competencie -->
 
-				<div class="service">
+				<div class="competencie">
 
 					<span class="icon"><i class="icon-window"></i></span>
 
-					<div class="service-content">
+					<div class="competencie-content">
 
 						<h3>Web Development</h3>
 
@@ -417,13 +417,13 @@
 
 					</div>
 
-				</div> <!-- /service -->
+				</div> <!-- /competencie -->
 
-				<div class="service">
+				<div class="competencie">
 
 					<span class="icon"><i class="icon-toggles"></i></span>
 
-					<div class="service-content">
+					<div class="competencie-content">
 
 						<h3>Desktop/Mobile Apps</h3>
 
@@ -432,13 +432,13 @@
 
 					</div>
 
-				</div> <!-- /service -->
+				</div> <!-- /competencie -->
 
-			</div> <!-- /services-list -->
+			</div> <!-- /competencies-list -->
 
-		</div> <!-- /services-content -->
+		</div> <!-- /competencies-content -->
 
-	</section> <!-- /services -->
+	</section> <!-- /competencies -->
 
 
 	<!-- contact
@@ -461,7 +461,7 @@
 			<div class="col-twelve">
 				
 				<!-- form -->
-				<form name="contactForm" id="contactForm" method="post" action="https://formspree.io/irtaza@live.de">
+				<form name="contactForm" id="contactForm" method="post">
 					<fieldset>
 
 						<div class="form-field">
@@ -469,11 +469,12 @@
 								minlength="2" required="">
 						</div>
 						<div class="form-field">
-							<input name="contactEmail" type="email" id="contactEmail" placeholder="Email" value=""
+							<input name="_replyTo" type="email" id="contactEmail" placeholder="Email" value=""
 								required="">
 						</div>
 						<div class="form-field">
 							<input name="contactSubject" type="text" id="contactSubject" placeholder="Subject" value="">
+							<input type="text" name="_gotcha" style="display:none" />
 						</div>
 						<div class="form-field">
 							<textarea name="contactMessage" id="contactMessage" placeholder="message" rows="10"

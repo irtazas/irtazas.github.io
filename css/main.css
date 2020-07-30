@@ -20,7 +20,7 @@
  *  12. resume
  *  13. portfolio
  *  14. call-to-action section
- *  15. services
+ *  15. competencies
  *  16. stats
  *  17. contact
  *  18. footer
@@ -2093,11 +2093,11 @@ header .logo a {
 
 /** 
  * ===================================================================
- * 15. services - (_layout.scss)
+ * 15. competencies - (_layout.scss)
  *
  * ------------------------------------------------------------------- 
  */
-#services {
+#competencies {
 	background: #313131 url(../images/bg.jpg) no-repeat center;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
@@ -2107,7 +2107,7 @@ header .logo a {
 	color: white;
 	position: relative;
 }
-#services .overlay {
+#competencies .overlay {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -2117,42 +2117,42 @@ header .logo a {
 	opacity: .9;
 }
 
-#services .section-intro {
+#competencies .section-intro {
 	margin-bottom: 1.8rem;
 }
 
-#services .section-intro h1 {
+#competencies .section-intro h1 {
 	color: white;
 }
-#services .section-intro h5 {
+#competencies .section-intro h5 {
 	color: #FF0077;
 }
-#services .section-intro p {
+#competencies .section-intro p {
 	color: rgba(255, 255, 255, 0.7);
 }
-.services-content {
+.competencies-content {
 	max-width: 1200px;
 }
-.services-list {
+.competencies-list {
 	margin-top: 1.2rem;
 	text-align: center;
 }
-.services-list .service {
+.competencies-list .competencie {
 	margin-bottom: 1.2rem;
 	padding: 0 30px;
 }
-.services-list .icon {
+.competencies-list .icon {
 	display: inline-block;
 	margin-bottom: 2.1rem;
 }
-.services-list .icon i {
+.competencies-list .icon i {
 	font-size: 5.4rem;
 	color: #FF0077;
 }
-.services-list h3 {
+.competencies-list h3 {
 	color: #FFFFFF;
 }
-.services-list .desc {
+.competencies-list .desc {
 	color: rgba(255, 255, 255, 0.6);
 }
 

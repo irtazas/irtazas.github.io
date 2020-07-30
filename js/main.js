@@ -225,6 +225,9 @@
 	/*	contact form
 	------------------------------------------------------ */
 
+	var contactform =  document.getElementById('contactForm');
+	contactform.setAttribute('action', '//formspree.io/' + 'irtaza' + '@' + 'live' + '.' + 'de');
+	
 	/* local validation */
 	$('#contactForm').validate({
 
