@@ -225,9 +225,9 @@
 	/*	contact form
 	------------------------------------------------------ */
 
-	var contactform =  document.getElementById('contactForm');
+	var contactform = document.getElementById('contactForm');
 	contactform.setAttribute('action', '//formspree.io/' + 'irtaza' + '@' + 'live' + '.' + 'de');
-	
+
 	/* local validation */
 	$('#contactForm').validate({
 
@@ -235,6 +235,25 @@
 
 
 	});
+
+
+	/*----------------------------------------------------- */
+	/* Show Clients IP and Info to top
+------------------------------------------------------- */
+var getLocation = "http://ip-api.com/json/";
+var geoLocation = $.getJSON(getLocation, function (data) {
+	$("#client-ip").text("ip: "+data.query)
+	$("#client-country").text("country: "+data.country)
+	$("#client-lat").text("lat: "+data.lat)
+	$("#client-lon").text("lon: "+data.lon)
+	//alert(data.query);
+});
+
+$("#bclient-info").click(function(){
+    $(".client-info").toggle( "slide" );
+  });
+
+
 
 
 	/*----------------------------------------------------- */
@@ -259,5 +278,7 @@
 		}
 
 	});
+
+
 
 })(jQuery);

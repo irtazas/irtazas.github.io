@@ -1421,6 +1421,25 @@ header .logo a {
 	color: #cc005f;
 }
 
+.intro_name{
+	display: inline-flex;
+
+}
+@keyframes blink {
+	50% {
+	  opacity: 0.0;
+	}
+  }
+  @-webkit-keyframes blink {
+	50% {
+	  opacity: 0.0;
+	}
+  }
+  .blink {
+	animation: blink 1s step-start 0s infinite;
+	-webkit-animation: blink 1s step-start 0s infinite;
+  }
+
 /**
  * responsive:
  * Intro
@@ -1482,6 +1501,38 @@ header .logo a {
 	.intro-social {
 		font-size: 2.4rem;
 	}
+}
+
+/**
+Clients Info
+*/
+
+.client-info{
+	background-color: black;
+	color: greenyellow;
+	font-size: smaller;
+	padding: 10px;
+	text-align: left;
+	font-family: "Lucida Console", "Lucida Sans Typewriter", monaco, "Bitstream Vera Sans Mono", monospace; font-size: 10px; font-style: normal; font-variant: normal; font-weight: 600; line-height: 14px;	
+}
+
+.client-info p{
+	margin-bottom: 0;
+}
+
+.client-overlay{
+	display: flex;
+}
+
+.client-toggle{
+	flex: 1;
+	text-align: justify;
+}
+
+#bclient-info{
+	padding: 0;
+	background-color: #2b2b2b;
+	color: deeppink;
 }
 
 
