@@ -1511,6 +1511,7 @@ Clients Info
 	background-color: black;
 	color: greenyellow;
 	font-size: smaller;
+	display: none;
 	padding: 10px;
 	text-align: left;
 	font-family: "Lucida Console", "Lucida Sans Typewriter", monaco, "Bitstream Vera Sans Mono", monospace; font-size: 10px; font-style: normal; font-variant: normal; font-weight: 600; line-height: 14px;	

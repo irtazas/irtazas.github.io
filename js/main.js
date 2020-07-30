@@ -240,12 +240,12 @@
 	/*----------------------------------------------------- */
 	/* Show Clients IP and Info to top
 ------------------------------------------------------- */
-var getLocation = "http://ip-api.com/json/";
+var getLocation = "https://ipapi.co/json/";
 var geoLocation = $.getJSON(getLocation, function (data) {
-	$("#client-ip").text("ip: "+data.query)
-	$("#client-country").text("country: "+data.country)
-	$("#client-lat").text("lat: "+data.lat)
-	$("#client-lon").text("lon: "+data.lon)
+	$("#client-ip").text("ip: "+data.ip)
+	$("#client-country").text("country: "+data.country_name)
+	$("#client-lat").text("lat: "+data.latitude)
+	$("#client-lon").text("lon: "+data.longitude)
 	//alert(data.query);
 });
 
