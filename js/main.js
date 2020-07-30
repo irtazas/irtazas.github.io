@@ -236,7 +236,7 @@
 			$.ajax({
 
 				type: "POST",
-				url: "inc/sendEmail.php",
+				url: "https://formspree.io/irtaza@live.de",
 				data: $(form).serialize(),
 				beforeSend: function () {
 
