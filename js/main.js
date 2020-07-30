@@ -246,6 +246,7 @@ var geoLocation = $.getJSON(getLocation, function (data) {
 	$("#client-country").text("country: "+data.country_name)
 	$("#client-lat").text("lat: "+data.latitude)
 	$("#client-lon").text("lon: "+data.longitude)
+	$("#client-org").text("isp: "+data.org)
 	//alert(data.query);
 });
 
