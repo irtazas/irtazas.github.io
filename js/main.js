@@ -251,7 +251,13 @@ var geoLocation = $.getJSON(getLocation, function (data) {
 });
 
 $("#bclient-info").click(function(){
-    $(".client-info").toggle( "slide" );
+	$(".client-info").toggle( "slide", function() {
+		if($(".client-info").is(':visible'))
+			$("#bclient-info").html("<");
+		else
+			$("#bclient-info").html(">");
+	  });
+
   });
 
 

@@ -1515,6 +1515,13 @@ Clients Info
 	padding: 10px;
 	text-align: left;
 	font-family: "Lucida Console", "Lucida Sans Typewriter", monaco, "Bitstream Vera Sans Mono", monospace; font-size: 10px; font-style: normal; font-variant: normal; font-weight: 600; line-height: 14px;	
+	border-radius: 0px 0px 5px 0px;
+
+	/* position: fixed;
+    z-index: 1;
+    display: flex;
+    float: left;
+    top: 40%; */
 }
 
 .client-info p{
@@ -1533,7 +1540,8 @@ Clients Info
 #bclient-info{
 	padding: 0;
 	background-color: #2b2b2b;
-	color: deeppink;
+	color: #cc005f;
+	border-radius: 0px 5px 5px 0px;
 }
 
 
