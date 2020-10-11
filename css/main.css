@@ -1417,8 +1417,17 @@ header .logo a {
 .intro-social li a, .intro-social li a:visited {
 	color: #FFFFFF;
 }
-.intro-social li a:hover, .intro-social li a:focus {
+/* .intro-social li a:hover, .intro-social li a:focus {
 	color: #cc005f;
+} */
+.social-linkedin a:hover, .social-linkedin a:focus{
+	color: #2867B2;
+}
+.social-github a:hover, .social-linkedin a:focus{
+	color: #919191;
+}
+.social-instagram a:hover, .social-linkedin a:focus{
+	color: #C13584;
 }
 
 .intro_name{
