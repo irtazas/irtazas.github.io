@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="theme-color" content="#000000">
+
     <title>Irtaza Syed - Software Engineer</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👾</text></svg>">
     <style>
@@ -211,13 +214,13 @@
             top: 0;
             left: 0;
             width: 100%;
-            padding: 15px 30px;
+            padding: 10px 25px; /* FIX: Reduced padding */
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            background: rgba(10, 14, 39, 0.8); /* Re-added transparency */
-            backdrop-filter: blur(10px); /* Re-added blur */
+            background: rgba(10, 14, 39, 0.8);
+            backdrop-filter: blur(10px);
             border-bottom: 2px solid var(--neon-cyan);
             box-shadow: 0 0 20px rgba(0, 255, 249, 0.3);
         }
@@ -262,16 +265,54 @@
             box-shadow: 0 0 15px var(--neon-green), inset 0 0 10px rgba(57, 255, 20, 0.2);
         }
 
-        /* Terminal Trigger in Nav */
+        /* Terminal Trigger in Nav - NEW STYLING */
+        @keyframes rainbow-cycle-border {
+            0%   { border-color: var(--neon-green); color: var(--neon-green); box-shadow: 0 0 8px var(--neon-green);}
+            25%  { border-color: var(--neon-cyan); color: var(--neon-cyan); box-shadow: 0 0 8px var(--neon-cyan);}
+            50%  { border-color: var(--neon-pink); color: var(--neon-pink); box-shadow: 0 0 8px var(--neon-pink);}
+            75%  { border-color: var(--neon-orange); color: var(--neon-orange); box-shadow: 0 0 8px var(--neon-orange);}
+            100% { border-color: var(--neon-green); color: var(--neon-green); box-shadow: 0 0 8px var(--neon-green);}
+        }
+
+        /* This <li> is just a container now */
+        .nav-links .terminal-trigger-li {
+            padding: 0;
+            border: none;
+            box-shadow: none;
+        }
+        .nav-links .terminal-trigger-li:hover {
+            border: none;
+            box-shadow: none;
+            background: transparent;
+        }
+        
+        /* FIX: Style the trigger as a <button> */
         .terminal-trigger {
-            font-size: 24px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 14px; /* FIX: Smaller size */
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: all 0.3s;
+            white-space: nowrap;
+            
+            /* Button-like appearance */
+            background: rgba(0,0,0,0.3);
+            border: 2px solid; /* Border color set by animation */
+            padding: 8px 12px;
+            
+            /* Reset default button styles */
+            outline: none;
+            display: inline-block;
+            line-height: 1;
+            
+            /* Animated Border/Color */
+            animation: rainbow-cycle-border 4s linear infinite;
         }
+
         .terminal-trigger:hover {
-            transform: scale(1.2);
-            filter: drop-shadow(0 0 8px var(--neon-green));
+            transform: scale(1.05);
+            /* Animation handles the glow */
         }
+        /* End of Terminal Trigger new styles */
 
 
         /* --- Mobile Burger Menu --- */
@@ -328,6 +369,22 @@
         .nav-overlay .nav-links a {
             font-family: 'Press Start 2P', cursive;
             font-size: 20px;
+        }
+        
+        /* FIX: Mobile terminal button styles */
+        .nav-overlay .nav-links .terminal-trigger-li {
+             padding: 0;
+             border: 0;
+             box-shadow: none;
+             width: 100%;
+             display: flex;
+             justify-content: center;
+        }
+        .nav-overlay .nav-links .terminal-trigger {
+            font-size: 18px; /* Bit bigger for mobile */
+            width: 90%;
+            max-width: 300px;
+            text-align: center;
         }
 
         .close-icon {
@@ -1136,8 +1193,24 @@
             }
 
             .nav-bar {
-                padding: 10px 15px;
+                padding: 10px 15px; /* FIX: Slimmer navbar */
+                justify-content: flex-end; /* FIX: Burger to the right */
+                position: relative; /* FIX: For centering logo */
             }
+            
+            /* FIX: Center logo on mobile, make it bigger, stop shift */
+            .nav-logo-smiley {
+                position: absolute;
+                left: 50%;
+                top: 50%; /* Add top for vertical centering */
+                transform: translate(-50%, -50%); /* Use 2D translate */
+                font-size: 40px; /* Use desktop size */
+            }
+            .nav-logo-smiley:hover {
+                /* Disable hover animation on mobile */
+                animation: none;
+            }
+
             /* Hide desktop links on mobile */
             .nav-links {
                 display: none;
@@ -1154,8 +1227,6 @@
             }
              /* Hide desktop terminal trigger on mobile */
             #terminal-trigger-nav { display: none; }
-
-            /* DELETED all the duplicate .glitch-text, .subtitle, and .section-title rules */
         }
     </style>
 </head>
@@ -1187,7 +1258,9 @@
                 <li><a href="#education">EDUCATION</a></li>
                 <li><a href="#projects">PROJECTS</a></li>
                 <li><a href="#contact">CONTACT</a></li>
-                <li class="terminal-trigger" id="terminal-trigger-nav" title="Open Terminal">📟</li>
+                <li class="terminal-trigger-li">
+                    <button class="terminal-trigger" id="terminal-trigger-nav" title="Open Terminal">><span class="cursor">_</span></button>
+                </li>
             </ul>
             <div class="burger-menu" id="burger-menu">
                 <span></span>
@@ -1204,7 +1277,9 @@
                 <li><a href="#education">EDUCATION</a></li>
                 <li><a href="#projects">PROJECTS</a></li>
                 <li><a href="#contact">CONTACT</a></li>
-                <li class="terminal-trigger" id="terminal-trigger-mobile">📟 TERMINAL</li>
+                <li class="terminal-trigger-li">
+                    <button class="terminal-trigger" id="terminal-trigger-mobile">><span class="cursor">_</span> TERMINAL</button>
+                </li>
             </ul>
         </div>
 
@@ -1735,7 +1810,8 @@
                     termInput.blur();
                 }
             }
-
+            
+            // FIX: Add click listener to BUTTONS, not <li>
             termTriggers.forEach(t => t.onclick = toggleTerminal);
             termClose.onclick = toggleTerminal;
 
@@ -1917,7 +1993,7 @@
                     this.startGameLoop();
                 },
                 startGameLoop() { if(this.loop) clearInterval(this.loop); this.loop = setInterval(() => this.update(), this.speed); },
-                stop() { if(this.loop) clearInterval(this.loop); this.btn.textContent="START"; this.btn.classList.remove('active'); },
+                stop() { if(this.loop) clearInterval(this.loop); this.loop=null; this.btn.textContent="START"; this.btn.classList.remove('active'); },
                 gameOver() { this.stop(); this.overlay.classList.add('visible'); this.btn.textContent="RESTART"; activeGame = null; },
                 placeFood() { this.food = {x:Math.floor(Math.random()*(this.canvas.width/this.grid)), y:Math.floor(Math.random()*(this.canvas.height/this.grid))}; },
                 update() {
@@ -2009,15 +2085,29 @@
                 }
             };
             InvaderGame.btn.onclick = () => InvaderGame.init();
-            // Touch for invaders: tap sides to move, bottom center to shoot
+            
+            // FIX: Alien Invaders Touch Controls with Scaling
             InvaderGame.canvas.addEventListener('touchstart', e => {
                  if(activeGame !== 'invaders') return;
                  e.preventDefault();
                  const rect = InvaderGame.canvas.getBoundingClientRect();
-                 const x = e.touches[0].clientX - rect.left, y = e.touches[0].clientY - rect.top;
-                 if(y > 250) InvaderGame.handleInput(' ');
-                 else if(x < 150) InvaderGame.handleInput('ArrowLeft');
-                 else InvaderGame.handleInput('ArrowRight');
+                 // We need to scale the touch coordinates to the 300x300 canvas size
+                 const touchX = e.touches[0].clientX - rect.left;
+                 const touchY = e.touches[0].clientY - rect.top;
+                 
+                 // Scale factor (how big the canvas is displayed vs. its 300px internal size)
+                 const scale = rect.width / 300; // Assumes 300 is the canvas.width
+                 
+                 const x = touchX / scale;
+                 const y = touchY / scale;
+
+                 if(y > 200) { // Bottom 1/3 is SHOOT
+                    InvaderGame.handleInput(' '); 
+                 } else if (x < 150) { // Top 2/3, Left 1/2 is MOVE LEFT
+                    InvaderGame.handleInput('ArrowLeft'); 
+                 } else { // Top 2/3, Right 1/2 is MOVE RIGHT
+                    InvaderGame.handleInput('ArrowRight');
+                 }
             });
 
             // --- GAME 3: TETRIS ---
@@ -2104,7 +2194,16 @@
 
             // --- OTHERS ---
             document.querySelectorAll('.project-box').forEach(b => b.onclick = () => {
-                 ['title','desc','details'].forEach(k => document.getElementById(`modal-${k}`).innerHTML = b.dataset[k]);
+                 let detailsHTML = '';
+                 b.dataset.details.split('<li>').forEach(item => {
+                     if(item) { // Avoid processing empty strings
+                         if (!item.endsWith('</li>')) item += '</li>';
+                         detailsHTML += `<li>${item.replace(/<\/?li>/g, '')}</li>`;
+                     }
+                 });
+                 document.getElementById('modal-title').innerHTML = b.dataset.title;
+                 document.getElementById('modal-desc').innerHTML = b.dataset.desc;
+                 document.getElementById('modal-details').innerHTML = detailsHTML;
                  document.getElementById('modal-github-link').href = b.dataset.githubLink;
                  document.getElementById('modal-overlay').classList.add('open');
             });
@@ -2114,7 +2213,9 @@
             const nav = document.getElementById('nav-overlay');
             const toggle = () => nav.classList.toggle('open');
             ['burger-menu','close-icon'].forEach(i => document.getElementById(i).onclick=toggle);
-            document.querySelectorAll('.nav-overlay a').forEach(l => l.addEventListener('click', toggle));
+            
+            // FIX: Add .terminal-trigger to the querySelector
+            document.querySelectorAll('.nav-overlay a, .nav-overlay .terminal-trigger').forEach(l => l.addEventListener('click', toggle));
         });
     </script>
 </body>
