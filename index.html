@@ -215,8 +215,7 @@
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            background: rgba(10, 14, 39, 0.8);
-            backdrop-filter: blur(10px);
+            background: var(--bg-dark);
             border-bottom: 2px solid var(--neon-cyan);
             box-shadow: 0 0 20px rgba(0, 255, 249, 0.3);
         }
@@ -1052,10 +1051,11 @@
         }
 
         .game-canvas-wrapper {
-            position: relative;
-            width: 300px;
-            height: 300px;
-        }
+    position: relative;
+    width: 100%; /* Make it responsive */
+    max-width: 300px; /* But cap it at 300px */
+    height: auto; /* Let the canvas's aspect ratio control height */
+}
 
         .game-canvas {
             background: #080808;
@@ -1145,6 +1145,21 @@
             }
              /* Hide desktop terminal trigger on mobile */
             #terminal-trigger-nav { display: none; }
+
+            /* Fix for "too-glowy" text on mobile */
+    .glitch-text {
+        text-shadow:
+            0 0 8px var(--neon-cyan),
+            0 0 15px var(--neon-cyan);
+    }
+
+    .subtitle {
+        text-shadow: 0 0 6px var(--neon-pink);
+    }
+
+    .section-title {
+        text-shadow: 0 0 8px var(--neon-pink), 0 0 15px var(--neon-pink);
+    }
 
         }
     </style>
@@ -2138,7 +2153,7 @@
             const nav = document.getElementById('nav-overlay');
             const toggle = () => nav.classList.toggle('open');
             ['burger-menu','close-icon'].forEach(i => document.getElementById(i).onclick=toggle);
-            document.querySelectorAll('.nav-overlay a').forEach(l => l.onclick=toggle);
+            document.querySelectorAll('.nav-overlay a').forEach(l => l.addEventListener('click', toggle));
         });
     </script>
 </body>
