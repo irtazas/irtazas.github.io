@@ -101,7 +101,7 @@
             z-index: 1;
             opacity: 0;
             transition: opacity 1s;
-            padding-top: 80px;
+            /* padding-top: 80px; --- REMOVED */
             max-width: 100vw; /* Ensure content doesn't overflow */
         }
 
@@ -1146,11 +1146,26 @@
              /* Hide desktop terminal trigger on mobile */
             #terminal-trigger-nav { display: none; }
 
+            .glitch-text {
+        text-shadow:
+            0 0 5px var(--neon-cyan),
+            0 0 10px var(--neon-cyan); /* Drastically reduced */
+    }
+
+    .subtitle {
+        text-shadow: 0 0 5px var(--neon-pink); /* Drastically reduced */
+    }
+
+    .section-title {
+        text-shadow: 0 0 5px var(--neon-pink), 0 0 10px var(--neon-pink); /* Drastically reduced */
+    }
+
             /* Fix for "too-glowy" text on mobile */
     .glitch-text {
         text-shadow:
             0 0 8px var(--neon-cyan),
-            0 0 15px var(--neon-cyan);
+            0 0 15px var(--neon-cyan),
+            0 0 25px var(--neon-cyan);
     }
 
     .subtitle {
