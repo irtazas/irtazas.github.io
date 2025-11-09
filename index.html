@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Irtaza Syed - Software Engineer</title>
-    <!-- Updated Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👾</text></svg>">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Share+Tech+Mono&display=swap');
@@ -111,7 +110,7 @@
 
         /* Hero Section */
         .hero {
-            min-height: calc(100vh - 80px);
+            min-height: 100vh; /* Make it full height */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -135,6 +134,7 @@
             position: relative;
             z-index: 2;
             max-width: 100%; /* Prevent text overflow */
+            padding-top: 80px; /* Add padding HERE */
         }
 
         /* Alien Avatar (Restored to Hero) */
@@ -161,10 +161,11 @@
             font-family: 'Press Start 2P', cursive;
             font-size: clamp(24px, 5vw, 64px); /* More responsive font size */
             color: var(--neon-cyan);
+            /* STACKED SHADOW FIX: */
             text-shadow:
-                0 0 10px var(--neon-cyan),
-                0 0 20px var(--neon-cyan),
-                0 0 40px var(--neon-cyan);
+                0 0 1px #fff,  /* 1. Sharp white outline */
+                0 0 4px var(--neon-cyan),  /* 2. Tight glow */
+                0 0 12px var(--neon-cyan); /* 3. Soft glow */
             margin-bottom: 20px;
             position: relative;
             animation: glitch 5s infinite;
@@ -215,7 +216,8 @@
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            background: var(--bg-dark);
+            background: rgba(10, 14, 39, 0.8); /* Re-added transparency */
+            backdrop-filter: blur(10px); /* Re-added blur */
             border-bottom: 2px solid var(--neon-cyan);
             box-shadow: 0 0 20px rgba(0, 255, 249, 0.3);
         }
@@ -356,7 +358,11 @@
             font-family: 'Press Start 2P', cursive;
             font-size: clamp(22px, 5vw, 48px);
             color: var(--neon-pink);
-            text-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink);
+            /* STACKED SHADOW FIX: */
+            text-shadow:
+                0 0 1px #fff, /* 1. Sharp white outline */
+                0 0 4px var(--neon-pink),  /* 2. Tight glow */
+                0 0 12px var(--neon-pink); /* 3. Soft glow */
             margin-bottom: 60px;
             text-align: center;
             position: relative;
@@ -1051,11 +1057,11 @@
         }
 
         .game-canvas-wrapper {
-    position: relative;
-    width: 100%; /* Make it responsive */
-    max-width: 300px; /* But cap it at 300px */
-    height: auto; /* Let the canvas's aspect ratio control height */
-}
+            position: relative;
+            width: 100%; /* Make it responsive */
+            max-width: 300px; /* But cap it at 300px */
+            height: auto; /* Let the canvas's aspect ratio control height */
+        }
 
         .game-canvas {
             background: #080808;
@@ -1123,9 +1129,12 @@
 
         /* Responsive Adjustments */
         @media (max-width: 768px) {
-            #main-content {
-                padding-top: 60px;
+            /* REMOVED #main-content padding */
+
+            .hero-content {
+                padding-top: 60px; /* ADDED mobile padding to hero content */
             }
+
             .nav-bar {
                 padding: 10px 15px;
             }
@@ -1146,41 +1155,11 @@
              /* Hide desktop terminal trigger on mobile */
             #terminal-trigger-nav { display: none; }
 
-            .glitch-text {
-        text-shadow:
-            0 0 5px var(--neon-cyan),
-            0 0 10px var(--neon-cyan); /* Drastically reduced */
-    }
-
-    .subtitle {
-        text-shadow: 0 0 5px var(--neon-pink); /* Drastically reduced */
-    }
-
-    .section-title {
-        text-shadow: 0 0 5px var(--neon-pink), 0 0 10px var(--neon-pink); /* Drastically reduced */
-    }
-
-            /* Fix for "too-glowy" text on mobile */
-    .glitch-text {
-        text-shadow:
-            0 0 8px var(--neon-cyan),
-            0 0 15px var(--neon-cyan),
-            0 0 25px var(--neon-cyan);
-    }
-
-    .subtitle {
-        text-shadow: 0 0 6px var(--neon-pink);
-    }
-
-    .section-title {
-        text-shadow: 0 0 8px var(--neon-pink), 0 0 15px var(--neon-pink);
-    }
-
+            /* DELETED all the duplicate .glitch-text, .subtitle, and .section-title rules */
         }
     </style>
 </head>
 <body>
-    <!-- Terminal Overlay (Full Screen) -->
     <div id="terminal-overlay">
         <button id="terminal-close">&times;</button>
         <div id="terminal-content">
@@ -1192,19 +1171,14 @@
         </div>
     </div>
 
-    <!-- Matrix Background -->
     <canvas id="matrix-bg"></canvas>
 
-    <!-- Boot Loader (Terminal Style) -->
     <div id="boot-loader">
         <div id="boot-text"></div>
     </div>
 
-    <!-- Main Content -->
     <div id="main-content">
-        <!-- Navigation -->
         <nav class="nav-bar">
-            <!-- NEW RETRO SMILEY LOGO -->
             <div class="nav-logo-smiley" id="fun-logo" title="Don't click me!">☺︎</div>
 
             <ul class="nav-links">
@@ -1213,10 +1187,8 @@
                 <li><a href="#education">EDUCATION</a></li>
                 <li><a href="#projects">PROJECTS</a></li>
                 <li><a href="#contact">CONTACT</a></li>
-                <!-- Terminal Trigger (Desktop) -->
                 <li class="terminal-trigger" id="terminal-trigger-nav" title="Open Terminal">📟</li>
             </ul>
-            <!-- Burger Menu Icon -->
             <div class="burger-menu" id="burger-menu">
                 <span></span>
                 <span></span>
@@ -1224,7 +1196,6 @@
             </div>
         </nav>
 
-        <!-- Mobile Nav Overlay -->
         <div class="nav-overlay" id="nav-overlay">
             <div class="close-icon" id="close-icon">&times;</div>
             <ul class="nav-links">
@@ -1233,17 +1204,14 @@
                 <li><a href="#education">EDUCATION</a></li>
                 <li><a href="#projects">PROJECTS</a></li>
                 <li><a href="#contact">CONTACT</a></li>
-                <!-- Terminal Trigger (Mobile) -->
                 <li class="terminal-trigger" id="terminal-trigger-mobile">📟 TERMINAL</li>
             </ul>
         </div>
 
 
-        <!-- Hero Section -->
         <section class="hero">
             <canvas id="hero-animation-bg"></canvas>
             <div class="hero-content">
-                <!-- Alien Avatar Only -->
                 <div class="pixel-avatar" id="alien-avatar" title="Launch Retro Arcade">👾</div>
                 <h1 class="glitch-text">IRTAZA SYED</h1>
                 <div class="subtitle">Software Engineer • Full-Stack • AI</div>
@@ -1253,12 +1221,10 @@
             </div>
         </section>
 
-        <!-- Experience Section -->
         <section id="experience">
             <h2 class="section-title fade-in">EXPERIENCE</h2>
             <div class="experience-grid">
 
-                <!-- META -->
                 <div class="job-card fade-in">
                     <div class="job-header">
                         <div>
@@ -1284,7 +1250,6 @@
                     </div>
                 </div>
 
-                <!-- IBM -->
                 <div class="job-card fade-in">
                     <div class="job-header">
                         <div>
@@ -1309,7 +1274,6 @@
                     </div>
                 </div>
 
-                <!-- ANACONDA INC. -->
                 <div class="job-card fade-in">
                     <div class="job-header">
                         <div>
@@ -1332,7 +1296,6 @@
                     </div>
                 </div>
 
-                <!-- MERCEDES-BENZ MOBILITY AG -->
                 <div class="job-card fade-in">
                     <div class="job-header">
                         <div>
@@ -1359,7 +1322,6 @@
                     </div>
                 </div>
 
-                <!-- CERN -->
                 <div class="job-card fade-in">
                     <div class="job-header">
                         <div>
@@ -1384,7 +1346,6 @@
                     </div>
                 </div>
 
-                <!-- ENBW AG -->
                 <div class="job-card fade-in">
                     <div class="job-header">
                         <div>
@@ -1410,7 +1371,6 @@
             </div>
         </section>
 
-        <!-- Skills Section -->
         <section id="skills">
             <h2 class="section-title fade-in">SKILLS</h2>
             <div class="skills-arcade">
@@ -1490,7 +1450,6 @@
             </div>
         </section>
 
-        <!-- Education Section -->
         <section id="education">
             <h2 class="section-title fade-in">EDUCATION</h2>
             <div class="education-terminal fade-in">
@@ -1521,12 +1480,10 @@
             </div>
         </section>
 
-        <!-- Projects Section -->
         <section id="projects">
             <h2 class="section-title fade-in">PROJECTS</h2>
             <div class="projects-container">
 
-                <!-- Project 1: AI Car Tracker -->
                 <div class="project-box fade-in"
                      data-title="Python AI Car & Pedestrian Tracker"
                      data-desc="A project to deepen understanding of Haar Cascade Classifiers and machine learning techniques."
@@ -1544,7 +1501,6 @@
                     </div>
                 </div>
 
-                <!-- Project 2: Robotic Ball -->
                 <div class="project-box fade-in"
                      data-title="Cartography with a robotic ball"
                      data-desc="An Android app to navigate a Sphero robotic ball and map its surroundings."
@@ -1563,7 +1519,6 @@
                     </div>
                 </div>
 
-                <!-- Project 3: CERN Talk -->
                 <div class="project-box fade-in"
                      data-title="Talk: Academia to Software Engineering"
                      data-desc="Extracurricular activity as a CERN Alumni panelist."
@@ -1584,7 +1539,6 @@
             </div>
         </section>
 
-        <!-- Contact Section -->
         <section id="contact">
             <h2 class="section-title fade-in">CONTACT</h2>
             <div class="contact-console fade-in">
@@ -1624,7 +1578,6 @@
             </div>
         </section>
 
-        <!-- Footer -->
         <footer>
             <div class="footer-text">
                 > IRTAZA SYED // SYSTEM ONLINE // READY <span class="cursor">_</span>
@@ -1633,15 +1586,13 @@
 
     </div>
 
-    <!-- --- Project Modal --- -->
     <div id="modal-overlay">
         <div id="project-modal">
             <div id="modal-close">&times;</div>
             <h3 id="modal-title">Project Title</h3>
             <p id="modal-desc">Project description...</p>
             <ul id="modal-details">
-                <!-- Details li items injected by JS -->
-            </ul>
+                </ul>
             <div id="modal-links">
                 <a href="#" id="modal-github-link" class="modal-link github" target="_blank">View on GitHub</a>
                 <a href="#" class="modal-link" target="_blank">Live Demo (TBC)</a>
@@ -1649,14 +1600,12 @@
         </div>
     </div>
 
-    <!-- --- Arcade Modal --- -->
     <div id="arcade-modal-overlay">
         <div id="arcade-modal">
             <div id="arcade-close-btn">&times;</div>
             <h2 id="arcade-modal-title">RETRO ARCADE</h2>
             <div class="arcade-grid">
 
-                <!-- SNAKE GAME -->
                 <div class="game-container">
                     <div class="game-title">SNAKE</div>
                     <div class="game-ui">SCORE: <span id="snake-score">0</span></div>
@@ -1670,7 +1619,6 @@
                     <p style="color: var(--neon-cyan); margin-top: 10px; font-size: 12px;">Arrows or Swipe to move</p>
                 </div>
 
-                <!-- SPACE INVADERS -->
                 <div class="game-container">
                     <div class="game-title">ALIEN INVADERS</div>
                     <div class="game-ui">SCORE: <span id="invaders-score">0</span></div>
@@ -1684,7 +1632,6 @@
                     <p style="color: var(--neon-cyan); margin-top: 10px; font-size: 12px;">Arrows/Tap sides move, Space/Tap bottom shoot</p>
                 </div>
 
-                <!-- TETRIS -->
                 <div class="game-container">
                     <div class="game-title">TETRIS</div>
                     <div class="game-ui">SCORE: <span id="tetris-score">0</span></div>
@@ -1702,7 +1649,6 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
