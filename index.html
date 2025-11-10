@@ -411,7 +411,7 @@
             font-size: 20px; /* Match link size */
             text-align: center;
             width: auto;
-            /* FIX: Allow terminal text to stack */
+            /* FIX: Stack icon and text vertically */
             display: flex;
             flex-direction: column;
             gap: 10px;
@@ -907,25 +907,33 @@
         /* --- Terminal Overlay (Full Screen Mode) --- */
         #terminal-overlay {
             position: fixed;
-            top: -100%; /* Initially off-screen */
+            top: 0; /* Changed from -100% */
             left: 0;
             width: 100vw;
             height: 100vh; /* Full screen */
             background: rgba(10, 14, 39, 0.98);
             z-index: 20000; /* MAXIMUM Z-INDEX - ALWAYS ON TOP */
-            transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: opacity 0.3s, visibility 0.3s; /* Changed transition */
             padding: 20px; /* Reduced padding */
             font-family: 'Share Tech Mono', monospace;
             color: var(--neon-green);
             font-size: 16px;
             overflow-y: auto;
             overflow-x: hidden; /* No horizontal scroll */
-            display: flex;
+
+            /* FIX: Use display: none; by default to fix overflow */
+            display: none;
             flex-direction: column;
+
             max-width: 100vw; /* Ensure it doesn't exceed viewport width */
+            opacity: 0;
+            visibility: hidden;
         }
         #terminal-overlay.open {
-            top: 0;
+            /* FIX: Use display: flex to show */
+            display: flex;
+            opacity: 1;
+            visibility: visible;
         }
 
         #terminal-close {
@@ -1079,6 +1087,7 @@
             font-size: 18px;
             transition: all 0.3s;
             margin-right: 10px;
+            margin-bottom: 10px; /* FIX: Add margin for stacking */
         }
         #modal-links a:hover {
             background: var(--neon-purple);
@@ -1166,7 +1175,8 @@
         /* Arcade Grid Layout - Responsive */
         .arcade-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Wider columns */
+            /* FIX: Reduced minmax to fit mobile */
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 40px;
             align-items: start;
             width: 100%;
@@ -1331,7 +1341,7 @@
                 user-select: none; /* Disable text selection */
             }
 
-            /* 1. Define a NEW mobile-safe animation */
+            /* 1. Define a NEW mobile-safe animation (MUST be outside any other rule) */
             @keyframes spin-happy-mobile {
                 0% {
                     transform: translate(-50%, -50%) rotate(0deg) scale(1);
@@ -1424,7 +1434,10 @@
                 <li><a href="#projects">PROJECTS</a></li>
                 <li><a href="#contact">CONTACT</a></li>
                 <li class="terminal-trigger-li">
-                    <button class="terminal-trigger" id="terminal-trigger-mobile" data-text=">_ TERMINAL">><span class="cursor">_</span><br>TERMINAL</button>
+                    <button class="terminal-trigger" id="terminal-trigger-mobile" data-text=">_ TERMINAL">
+                        <span>><span class="cursor">_</span></span>
+                        TERMINAL
+                    </button>
                 </li>
             </ul>
         </div>
@@ -1948,12 +1961,22 @@
             const termTriggers = document.querySelectorAll('.terminal-trigger');
 
             function toggleTerminal() {
-                terminal.classList.toggle('open');
-                if (terminal.classList.contains('open')) {
-                    // Force focus to open mobile keyboard
-                    setTimeout(() => termInput.focus(), 100);
+                // FIX: Use display style instead of top
+                const isOpen = terminal.classList.toggle('open');
+                if (isOpen) {
+                    terminal.style.display = 'flex';
+                    setTimeout(() => { // Allow display to apply before opacity
+                         terminal.style.opacity = '1';
+                         terminal.style.visibility = 'visible';
+                         termInput.focus();
+                    }, 10);
                 } else {
-                    termInput.blur();
+                    terminal.style.opacity = '0';
+                    terminal.style.visibility = 'hidden';
+                    setTimeout(() => { // Wait for transition to finish
+                         terminal.style.display = 'none';
+                         termInput.blur();
+                    }, 300); // Must match transition time
                 }
             }
 
@@ -2097,9 +2120,9 @@
             const openArcade = () => {
                 arcadeModal.classList.add('open');
                 // FIX: Initialize all games, then stop them to show the first frame
-                if (!SnakeGame.loop) { SnakeGame.init(); SnakeGame.stop(); }
-                if (!InvaderGame.loop) { InvaderGame.init(); InvaderGame.stop(); }
-                if (!TetrisGame.loop) { TetrisGame.init(true); TetrisGame.stop(); } // Pass 'true' to skip newPiece on init
+                if (!SnakeGame.loop) SnakeGame.init(true);
+                if (!InvaderGame.loop) InvaderGame.init(true);
+                if (!TetrisGame.loop) TetrisGame.init(true);
             };
             document.getElementById('arcade-close-btn').onclick = () => { arcadeModal.classList.remove('open'); stopAllGames(); };
 
@@ -2279,8 +2302,9 @@
                     if(this.loop) cancelAnimationFrame(this.loop);
                     if(this.dropInt) clearInterval(this.dropInt);
 
+                    this.newPiece(isFirstLoad); // FIX: Pass load state
+
                     if (!isFirstLoad) {
-                        this.newPiece();
                         this.dropInt = setInterval(()=>this.drop(), 800);
                         this.loop = requestAnimationFrame(()=>this.update());
                     }
@@ -2288,10 +2312,13 @@
                 },
                 stop() { if(this.loop) cancelAnimationFrame(this.loop); if(this.dropInt) clearInterval(this.dropInt); this.loop=null; this.dropInt=null; this.btn.textContent="START"; this.btn.classList.remove('active'); },
                 gameOver() { this.stop(); this.overlay.classList.add('visible'); this.btn.textContent="RESTART"; activeGame = null; },
-                newPiece() {
+                newPiece(isFirstLoad = false) {
                     const r = Math.floor(Math.random()*7);
                     this.p = { m: this.PCS[r], c: this.COLORS[r], x:3, y:0 };
-                    if(this.collide()) this.gameOver();
+                    if(this.collide()) {
+                        // FIX: Only trigger game over if it's not the very first piece
+                        if (!isFirstLoad) this.gameOver();
+                    }
                 },
                 collide(ox=0,oy=0,m=this.p.m) {
                      for(let r=0;r<m.length;r++) for(let c=0;c<m[0].length;c++) {
@@ -2386,7 +2413,25 @@
             let smileyClickTimer = null;
             const originalTitle = funLogo.title;
 
+            // Desktop click
             funLogo.addEventListener('click', () => {
+                triggerSmileyClick();
+            });
+
+            // FIX: Mobile tap logic
+            funLogo.addEventListener('touchstart', (e) => {
+                e.preventDefault(); // Prevent zoom on double tap
+                funLogo.classList.add('tapped');
+                triggerSmileyClick(); // <-- FIX: Run the 3-tap logic on tap
+            }, { passive: false });
+
+            funLogo.addEventListener('touchend', () => {
+                setTimeout(() => { // Let the animation run for a bit
+                    funLogo.classList.remove('tapped');
+                }, 1000); // Must match animation duration
+            });
+
+            function triggerSmileyClick() {
                 smileyClicks++;
                 if (smileyClickTimer) clearTimeout(smileyClickTimer);
 
@@ -2403,23 +2448,11 @@
                         funLogo.title = originalTitle;
                     }, 1500); // Reset after 1.5 seconds
                 }
-            });
+            }
 
             lightShow.onclick = () => {
                 lightShow.style.display = 'none';
             };
-
-            // --- FIX: Mobile Smiley Tap Animation ---
-            funLogo.addEventListener('touchstart', (e) => {
-                e.preventDefault(); // Prevent zoom on double tap
-                funLogo.classList.add('tapped');
-            }, { passive: false });
-
-            funLogo.addEventListener('touchend', () => {
-                setTimeout(() => { // Let the animation run for a bit
-                    funLogo.classList.remove('tapped');
-                }, 1000); // Must match animation duration
-            });
 
         });
     </script>
