@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <meta name="theme-color" content="#000000">
+
+    <meta name="theme-color" content="#0a0e27">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
     <title>Irtaza Syed - Software Engineer</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👾</text></svg>">
@@ -285,7 +287,7 @@
             box-shadow: none;
             background: transparent;
         }
-        
+
         /* FIX: Style the trigger as a <button> */
         .terminal-trigger {
             font-family: 'Press Start 2P', cursive;
@@ -293,17 +295,17 @@
             cursor: pointer;
             transition: all 0.3s;
             white-space: nowrap;
-            
+
             /* Button-like appearance */
             background: rgba(0,0,0,0.3);
             border: 2px solid; /* Border color set by animation */
             padding: 8px 12px;
-            
+
             /* Reset default button styles */
             outline: none;
             display: inline-block;
             line-height: 1;
-            
+
             /* Animated Border/Color */
             animation: rainbow-cycle-border 4s linear infinite;
         }
@@ -370,7 +372,7 @@
             font-family: 'Press Start 2P', cursive;
             font-size: 20px;
         }
-        
+
         /* FIX: Mobile terminal button styles */
         .nav-overlay .nav-links .terminal-trigger-li {
              padding: 0;
@@ -381,10 +383,13 @@
              justify-content: center;
         }
         .nav-overlay .nav-links .terminal-trigger {
-            font-size: 18px; /* Bit bigger for mobile */
-            width: 90%;
-            max-width: 300px;
-            text-align: center;
+            font-size: 14px; /* Smaller to fit properly */
+    width: 80%;
+    max-width: 250px;
+    text-align: center;
+    padding: 10px 15px; /* More comfortable padding */
+    white-space: normal; /* Allow text wrapping if needed */
+    line-height: 1.3;
         }
 
         .close-icon {
@@ -1016,6 +1021,57 @@
             padding-right: 30px; /* Make room for close button */
         }
 
+        #modal-links {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.modal-link {
+    display: block;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12px;
+    text-align: center;
+    padding: 15px 20px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid var(--neon-cyan);
+    color: var(--neon-cyan);
+    text-decoration: none;
+    text-shadow: 0 0 10px var(--neon-cyan);
+    transition: all 0.3s;
+}
+
+.modal-link:hover {
+    background: var(--neon-cyan);
+    color: #000;
+    box-shadow: 0 0 20px var(--neon-cyan);
+    transform: scale(1.05);
+}
+
+.modal-link.github {
+    border-color: var(--neon-pink);
+    color: var(--neon-pink);
+    text-shadow: 0 0 10px var(--neon-pink);
+}
+
+.modal-link.github:hover {
+    background: var(--neon-pink);
+    color: #000;
+    box-shadow: 0 0 20px var(--neon-pink);
+}
+
+@media (min-width: 600px) {
+    #modal-links {
+        flex-direction: row;
+        justify-content: center;
+    }
+    .modal-link {
+        flex: 1;
+        max-width: 250px;
+    }
+}
+
         /* --- Arcade Modal --- */
         #arcade-modal-overlay {
             position: fixed;
@@ -1183,51 +1239,57 @@
             box-shadow: 0 0 20px var(--neon-orange);
         }
 
+@media (max-width: 768px) {
+    .hero-content {
+        padding-top: 60px;
+    }
 
-        /* Responsive Adjustments */
-        @media (max-width: 768px) {
-            /* REMOVED #main-content padding */
+    .nav-bar {
+        padding: 10px 15px;
+        justify-content: flex-end;
+        position: relative;
+    }
 
-            .hero-content {
-                padding-top: 60px; /* ADDED mobile padding to hero content */
-            }
+    /* FIX: Center logo on mobile, make it bigger, stop shift */
+    .nav-logo-smiley {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 40px;
+        -webkit-tap-highlight-color: transparent;
+    }
 
-            .nav-bar {
-                padding: 10px 15px; /* FIX: Slimmer navbar */
-                justify-content: flex-end; /* FIX: Burger to the right */
-                position: relative; /* FIX: For centering logo */
-            }
-            
-            /* FIX: Center logo on mobile, make it bigger, stop shift */
-            .nav-logo-smiley {
-                position: absolute;
-                left: 50%;
-                top: 50%; /* Add top for vertical centering */
-                transform: translate(-50%, -50%); /* Use 2D translate */
-                font-size: 40px; /* Use desktop size */
-            }
-            .nav-logo-smiley:hover {
-                /* Disable hover animation on mobile */
-                animation: none;
-            }
-
-            /* Hide desktop links on mobile */
-            .nav-links {
-                display: none;
-            }
-            .burger-menu {
-                display: block;
-            }
-            /* Show links in mobile overlay */
-            .nav-overlay .nav-links {
-                display: flex;
-            }
-            .arcade-grid {
-                grid-template-columns: 1fr; /* Stack on mobile */
-            }
-             /* Hide desktop terminal trigger on mobile */
-            #terminal-trigger-nav { display: none; }
+    @keyframes spin-happy-mobile {
+        0% {
+            transform: translate(-50%, -50%) rotate(0deg) scale(1);
         }
+        50% {
+            transform: translate(-50%, -50%) rotate(180deg) scale(1.15);
+        }
+        100% {
+            transform: translate(-50%, -50%) rotate(360deg) scale(1);
+        }
+    }
+
+    .nav-logo-smiley:active {
+        animation: spin-happy-mobile 0.6s ease-in-out, rainbow-glow 0.6s linear;
+    }
+
+    .nav-links {
+        display: none;
+    }
+    .burger-menu {
+        display: block;
+    }
+    .nav-overlay .nav-links {
+        display: flex;
+    }
+    .arcade-grid {
+        grid-template-columns: 1fr;
+    }
+    #terminal-trigger-nav { display: none; }
+}
     </style>
 </head>
 <body>
@@ -1810,7 +1872,7 @@
                     termInput.blur();
                 }
             }
-            
+
             // FIX: Add click listener to BUTTONS, not <li>
             termTriggers.forEach(t => t.onclick = toggleTerminal);
             termClose.onclick = toggleTerminal;
@@ -2085,7 +2147,7 @@
                 }
             };
             InvaderGame.btn.onclick = () => InvaderGame.init();
-            
+
             // FIX: Alien Invaders Touch Controls with Scaling
             InvaderGame.canvas.addEventListener('touchstart', e => {
                  if(activeGame !== 'invaders') return;
@@ -2094,17 +2156,17 @@
                  // We need to scale the touch coordinates to the 300x300 canvas size
                  const touchX = e.touches[0].clientX - rect.left;
                  const touchY = e.touches[0].clientY - rect.top;
-                 
+
                  // Scale factor (how big the canvas is displayed vs. its 300px internal size)
                  const scale = rect.width / 300; // Assumes 300 is the canvas.width
-                 
+
                  const x = touchX / scale;
                  const y = touchY / scale;
 
                  if(y > 200) { // Bottom 1/3 is SHOOT
-                    InvaderGame.handleInput(' '); 
+                    InvaderGame.handleInput(' ');
                  } else if (x < 150) { // Top 2/3, Left 1/2 is MOVE LEFT
-                    InvaderGame.handleInput('ArrowLeft'); 
+                    InvaderGame.handleInput('ArrowLeft');
                  } else { // Top 2/3, Right 1/2 is MOVE RIGHT
                     InvaderGame.handleInput('ArrowRight');
                  }
@@ -2213,7 +2275,7 @@
             const nav = document.getElementById('nav-overlay');
             const toggle = () => nav.classList.toggle('open');
             ['burger-menu','close-icon'].forEach(i => document.getElementById(i).onclick=toggle);
-            
+
             // FIX: Add .terminal-trigger to the querySelector
             document.querySelectorAll('.nav-overlay a, .nav-overlay .terminal-trigger').forEach(l => l.addEventListener('click', toggle));
         });
