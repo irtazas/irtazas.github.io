@@ -169,7 +169,7 @@
             font-family: 'Press Start 2P', cursive;
             font-size: clamp(24px, 5vw, 64px); /* More responsive font size */
             color: var(--neon-cyan);
-            /* STACKED SHADOW FIX: */
+            /* STACKED SHADOW */
             text-shadow:
                 0 0 1px #fff,  /* 1. Sharp white outline */
                 0 0 4px var(--neon-cyan),  /* 2. Tight glow */
@@ -219,7 +219,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            padding: 10px 25px; /* FIX: Reduced padding */
+            padding: 10px 25px; /* Reduced padding */
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -237,7 +237,7 @@
             text-shadow: 0 0 15px var(--neon-yellow);
             cursor: pointer;
             transition: all 0.3s;
-            /* FIX: Add user-select none to prevent ugly tap highlight */
+            /* Add user-select none to prevent ugly tap highlight */
             user-select: none;
             -webkit-user-select: none;
             -webkit-tap-highlight-color: transparent;
@@ -283,7 +283,7 @@
             100% { color: var(--neon-green); text-shadow: 0 0 8px var(--neon-green);}
         }
 
-        /* FIX: Keyframes for the glitchy hover effect */
+        /* Keyframes for the glitchy hover effect */
         @keyframes glitch-clip {
            0% { clip-path: inset(40% 0 40% 0); }
            20% { clip-path: inset(10% 0 60% 0); }
@@ -305,10 +305,10 @@
             background: transparent;
         }
 
-        /* FIX: Style the trigger as a <button> */
+        /* Style the trigger as a <button> */
         .terminal-trigger {
             font-family: 'Press Start 2P', cursive;
-            font-size: 16px; /* FIX: Adjusted size */
+            font-size: 16px; /* Adjusted size */
             cursor: pointer;
             transition: all 0.3s;
 
@@ -326,7 +326,7 @@
             animation: rainbow-cycle-text 4s linear infinite;
         }
 
-        /* FIX: Glitch effect on hover */
+        /* Glitch effect on hover */
         .terminal-trigger::after {
             content: attr(data-text); /* Use data-text for the glitch copy */
             position: absolute;
@@ -398,7 +398,7 @@
             font-size: 20px;
         }
 
-        /* FIX: Mobile terminal button styles */
+        /* Mobile terminal button styles */
         .nav-overlay .nav-links .terminal-trigger-li {
              padding: 0;
              border: 0;
@@ -411,7 +411,7 @@
             font-size: 20px; /* Match link size */
             text-align: center;
             width: auto;
-            /* FIX: Stack icon and text vertically */
+            /* Stack icon and text vertically */
             display: flex;
             flex-direction: column;
             gap: 10px;
@@ -449,7 +449,7 @@
             font-family: 'Press Start 2P', cursive;
             font-size: clamp(22px, 5vw, 48px);
             color: var(--neon-pink);
-            /* STACKED SHADOW FIX: */
+            /* STACKED SHADOW */
             text-shadow:
                 0 0 1px #fff, /* 1. Sharp white outline */
                 0 0 4px var(--neon-pink),  /* 2. Tight glow */
@@ -921,7 +921,7 @@
             overflow-y: auto;
             overflow-x: hidden; /* No horizontal scroll */
 
-            /* FIX: Use display: none; by default to fix overflow */
+            /* Use display: none; by default to fix overflow */
             display: none;
             flex-direction: column;
 
@@ -930,7 +930,7 @@
             visibility: hidden;
         }
         #terminal-overlay.open {
-            /* FIX: Use display: flex to show */
+            /* Use display: flex to show */
             display: flex;
             opacity: 1;
             visibility: visible;
@@ -1053,7 +1053,7 @@
             padding-right: 30px; /* Make room for close button */
         }
 
-        /* FIX: Re-add styles for modal details & links */
+        /* Re-add styles for modal details & links */
         #project-modal p {
             color: var(--text);
             margin-bottom: 15px;
@@ -1087,7 +1087,7 @@
             font-size: 18px;
             transition: all 0.3s;
             margin-right: 10px;
-            margin-bottom: 10px; /* FIX: Add margin for stacking */
+            margin-bottom: 10px; /* Add margin for stacking */
         }
         #modal-links a:hover {
             background: var(--neon-purple);
@@ -1117,7 +1117,7 @@
             backdrop-filter: blur(10px);
             z-index: 3000;
             display: none;
-            /* FIX: Center the modal */
+            /* Center the modal */
             align-items: center;
             justify-content: center;
             overflow-y: auto;
@@ -1139,9 +1139,11 @@
             transition: transform 0.2s ease-out;
             width: 100%;
             max-width: 1200px; /* Wider for 3 games */
-            /* FIX: Remove margins */
+            /* Remove margins */
             /* margin-top: 40px; */
             /* margin-bottom: 40px; */
+            max-height: 90vh;
+            overflow-y: auto;
         }
         #arcade-modal-overlay.open #arcade-modal {
             transform: scale(1);
@@ -1175,7 +1177,7 @@
         /* Arcade Grid Layout - Responsive */
         .arcade-grid {
             display: grid;
-            /* FIX: Reduced minmax to fit mobile */
+            /* Reduced minmax to fit mobile */
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 40px;
             align-items: start;
@@ -1325,12 +1327,12 @@
             }
 
             .nav-bar {
-                padding: 10px 15px; /* FIX: Slimmer navbar */
-                justify-content: flex-end; /* FIX: Burger to the right */
-                position: relative; /* FIX: For centering logo */
+                padding: 10px 15px; /* Slimmer navbar */
+                justify-content: flex-end; /* Burger to the right */
+                position: relative; /* For centering logo */
             }
 
-            /* FIX: Center logo on mobile, make it bigger, stop shift */
+            /* Center logo on mobile, make it bigger, stop shift */
             .nav-logo-smiley {
                 position: absolute;
                 left: 50%;
@@ -1355,9 +1357,9 @@
             }
 
             /* 2. Apply the new animation on mobile tap */
-            /* FIX: Use .tapped class from JS instead of :active */
+            /* Use .tapped class from JS instead of :active */
             .nav-logo-smiley.tapped {
-                animation: spin-happy-mobile 1s linear infinite, rainbow-glow 1s linear infinite;
+                animation: spin-happy-mobile 0.5s linear infinite, rainbow-glow 1s linear infinite;
             }
 
             .nav-logo-smiley:hover {
@@ -1779,18 +1781,13 @@
                 <div class="contact-grid">
 
                     <div class="contact-item">
+                        <div class="contact-label">LOCATION</div>
+                        <div class="contact-value">Los Angeles, California</div>
+                    </div>
+
+                    <div class="contact-item">
                         <div class="contact-label">EMAIL</div>
                         <div class="contact-value"><a href="mailto:irtaza.com@gmail.com">irtaza.com@gmail.com</a></div>
-                    </div>
-
-                    <div class="contact-item">
-                        <div class="contact-label">PHONE</div>
-                        <div class="contact-value"><a href="tel:+19095260400">(909) 526-0400</a></div>
-                    </div>
-
-                    <div class="contact-item">
-                        <div class="contact-label">LOCATION</div>
-                        <div class="contact-value">Burlingame, California</div>
                     </div>
 
                     <div class="contact-item">
@@ -1801,11 +1798,6 @@
                     <div class="contact-item">
                         <div class="contact-label">LINKEDIN</div>
                         <div class="contact-value"><a href="https://linkedin.com/in/irtaza" target="_blank">linkedin.com/in/irtaza</a></div>
-                    </div>
-
-                    <div class="contact-item">
-                        <div class="contact-label">WEBSITE</div>
-                        <div class="contact-value"><a href="https://irtazas.github.io" target="_blank">irtazas.github.io</a></div>
                     </div>
 
                 </div>
@@ -1854,7 +1846,7 @@
                 </div>
 
                 <div class="game-container">
-                    <div class="game-title">ALIEN INVADERS</div>
+                    <div class="game-title">SPACE INVADERS</div>
                     <div class="game-ui">SCORE: <span id="invaders-score">0</span></div>
                     <div class="game-canvas-wrapper">
                         <canvas id="invaders-canvas" width="300" height="300" class="game-canvas"></canvas>
@@ -1961,7 +1953,7 @@
             const termTriggers = document.querySelectorAll('.terminal-trigger');
 
             function toggleTerminal() {
-                // FIX: Use display style instead of top
+                // Use display style instead of top
                 const isOpen = terminal.classList.toggle('open');
                 if (isOpen) {
                     terminal.style.display = 'flex';
@@ -1980,7 +1972,7 @@
                 }
             }
 
-            // FIX: Add click listener to BUTTONS
+            // Add click listener to BUTTONS
             termTriggers.forEach(t => t.onclick = toggleTerminal);
             termClose.onclick = toggleTerminal;
 
@@ -2016,7 +2008,7 @@
                             termOutput.textContent += "Available commands: help, about, skills, projects, experience, contact, clear, exit, sudo hire";
                             break;
                         case 'about':
-                            termOutput.textContent += "Irtaza Syed. Software Engineer. Full-Stack & AI specialist based in Burlingame, CA. Passionate about robust back-ends and retro front-ends.";
+                            termOutput.textContent += "Irtaza Syed. Software Engineer. Full-Stack & AI specialist based in Los Angeles, California. Passionate about robust backends and modern frontends.";
                             break;
                         case 'skills':
                             termOutput.textContent += "Languages: Java, Python, JavaScript, TypeScript\nCloud: AWS, Azure, Kubernetes, Docker\nFrameworks: Spring Boot, Angular, React\nAI: OpenAI API, Llama, Pandas";
@@ -2113,13 +2105,13 @@
 
 
             // =========================================
-            // === ARCADE ENGINE (FIXED & MOBILE ENABLED) ===
+            // === ARCADE ENGINE ===
             // =========================================
             let activeGame = null;
             const arcadeModal = document.getElementById('arcade-modal-overlay');
             const openArcade = () => {
                 arcadeModal.classList.add('open');
-                // FIX: Initialize all games, then stop them to show the first frame
+                // Initialize all games, then stop them to show the first frame
                 if (!SnakeGame.loop) SnakeGame.init(true);
                 if (!InvaderGame.loop) InvaderGame.init(true);
                 if (!TetrisGame.loop) TetrisGame.init(true);
@@ -2161,6 +2153,7 @@
                     this.snake = [{x:10,y:10}]; this.score = 0; this.scoreEl.textContent = 0; this.speed = 250;
                     this.dir = {x:1,y:0}; this.nextDir = {x:1,y:0}; this.placeFood();
                     this.draw(); // Draw first frame
+                    this.stop();
                     if (!isFirstLoad) this.startGameLoop();
                 },
                 startGameLoop() { if(this.loop) clearInterval(this.loop); this.loop = setInterval(() => this.update(), this.speed); },
@@ -2220,6 +2213,7 @@
                     this.score=0; this.scoreEl.textContent=0; this.player={x:150,y:280}; this.bullets=[]; this.aliens=[]; this.alienDir=1;
                     for(let r=0;r<4;r++) for(let c=0;c<8;c++) this.aliens.push({x:30+c*30, y:30+r*30, w:20, h:20, alive:true});
                     this.draw(); // Draw first frame
+                    this.stop();
                     if (!isFirstLoad) {
                         if(this.loop) clearInterval(this.loop); this.loop = setInterval(() => this.tick(), 50);
                     }
@@ -2262,7 +2256,7 @@
             };
             InvaderGame.btn.onclick = () => InvaderGame.init();
 
-            // FIX: Alien Invaders Touch Controls with Scaling
+            // Alien Invaders Touch Controls with Scaling
             InvaderGame.canvas.addEventListener('touchstart', e => {
                  if(activeGame !== 'invaders') return;
                  e.preventDefault();
@@ -2302,13 +2296,14 @@
                     if(this.loop) cancelAnimationFrame(this.loop);
                     if(this.dropInt) clearInterval(this.dropInt);
 
-                    this.newPiece(isFirstLoad); // FIX: Pass load state
+                    this.newPiece(isFirstLoad); // Pass load state
 
                     if (!isFirstLoad) {
                         this.dropInt = setInterval(()=>this.drop(), 800);
                         this.loop = requestAnimationFrame(()=>this.update());
                     }
                     this.draw(); // Draw first frame
+                    this.stop();
                 },
                 stop() { if(this.loop) cancelAnimationFrame(this.loop); if(this.dropInt) clearInterval(this.dropInt); this.loop=null; this.dropInt=null; this.btn.textContent="START"; this.btn.classList.remove('active'); },
                 gameOver() { this.stop(); this.overlay.classList.add('visible'); this.btn.textContent="RESTART"; activeGame = null; },
@@ -2316,7 +2311,7 @@
                     const r = Math.floor(Math.random()*7);
                     this.p = { m: this.PCS[r], c: this.COLORS[r], x:3, y:0 };
                     if(this.collide()) {
-                        // FIX: Only trigger game over if it's not the very first piece
+                        // Only trigger game over if it's not the very first piece
                         if (!isFirstLoad) this.gameOver();
                     }
                 },
@@ -2352,11 +2347,11 @@
                 },
                 draw() {
                     this.drawBoard();
-                    // FIX: Check for board initialization
+                    // Check for board initialization
                     if (this.board.length > 0) {
                         for(let r=0;r<this.R;r++) for(let c=0;c<this.C;c++) { if(this.board[r][c]) this.drawSq(c,r,this.board[r][c]); }
                     }
-                    // FIX: Check for piece initialization
+                    // Check for piece initialization
                     if(this.p) {
                         this.p.m.forEach((r,ri) => r.forEach((c,ci) => { if(c) this.drawSq(this.p.x+ci, this.p.y+ri, this.p.c); }));
                     }
@@ -2387,7 +2382,7 @@
 
             // --- OTHERS ---
 
-            // FIX: Restore Project Modal JS
+            // Restore Project Modal JS
             document.querySelectorAll('.project-box').forEach(b => b.onclick = () => {
                  document.getElementById('modal-title').innerHTML = b.dataset.title;
                  document.getElementById('modal-desc').innerHTML = b.dataset.desc;
@@ -2403,7 +2398,7 @@
             const toggle = () => nav.classList.toggle('open');
             ['burger-menu','close-icon'].forEach(i => document.getElementById(i).onclick=toggle);
 
-            // FIX: Add .terminal-trigger to the querySelector
+            // Add .terminal-trigger to the querySelector
             document.querySelectorAll('.nav-overlay a, .nav-overlay .terminal-trigger').forEach(l => l.addEventListener('click', toggle));
 
             // --- NEW: Light Show Logic ---
@@ -2418,11 +2413,11 @@
                 triggerSmileyClick();
             });
 
-            // FIX: Mobile tap logic
+            //Mobile tap logic
             funLogo.addEventListener('touchstart', (e) => {
                 e.preventDefault(); // Prevent zoom on double tap
                 funLogo.classList.add('tapped');
-                triggerSmileyClick(); // <-- FIX: Run the 3-tap logic on tap
+                triggerSmileyClick(); // <-- Run the 3-tap logic on tap
             }, { passive: false });
 
             funLogo.addEventListener('touchend', () => {
