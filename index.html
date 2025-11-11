@@ -904,6 +904,7 @@
             text-align: center;
             transition: all 0.3s;
             word-break: break-word; /* Prevent overflow of long emails/links */
+            cursor: pointer;
         }
 
         .contact-item:hover {
@@ -1365,6 +1366,51 @@
             animation: bounce-spin 2s linear infinite, rainbow-glow 1s linear infinite;
         }
 
+/* --- Palm Rain Effect --- */
+#palm-rain-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none; /* Clicks pass through */
+    z-index: 40000;
+    overflow: hidden;
+    display: none; /* Hidden by default */
+}
+
+.palm-emoji {
+    position: absolute;
+    top: -50px; /* Start just above screen */
+    user-select: none;
+    will-change: transform, opacity;
+    animation: palm-fall 7s linear forwards; /* Use 'forwards' to stay at end state */
+}
+
+/* A single, simpler animation */
+@keyframes palm-fall {
+    from {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(110vh) rotate(720deg); /* Fall to bottom and spin */
+        opacity: 1;
+    }
+}
+
+        /* --- Scroll Animations --- */
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease-out;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 
         /* Responsive Adjustments */
         @media (max-width: 768px) {
@@ -1812,24 +1858,30 @@
                 <div class="contact-grid">
 
                     <div class="contact-item">
-                        <div class="contact-label">LOCATION</div>
+                        <div class="contact-label" id="location-btn">LOCATION</div>
                         <div class="contact-value">Los Angeles, California</div>
                     </div>
 
-                    <div class="contact-item">
-                        <div class="contact-label">EMAIL</div>
-                        <div class="contact-value"><a href="mailto:irtaza.com@gmail.com">irtaza.com@gmail.com</a></div>
-                    </div>
+                    <a href="mailto:irtaza.com@gmail.com" style="text-decoration: none">
+                        <div class="contact-item">
+                            <div class="contact-label">EMAIL</div>
+                            <div class="contact-value">irtaza.com@gmail.com</div>
+                        </div>
+                    </a>
 
-                    <div class="contact-item">
-                        <div class="contact-label">GITHUB</div>
-                        <div class="contact-value"><a href="https://github.com/irtazas" target="_blank">github.com/irtazas</a></div>
-                    </div>
+                    <a href="https://github.com/irtazas" target="_blank" style="text-decoration: none">
+                        <div class="contact-item">
+                            <div class="contact-label">GITHUB</div>
+                            <div class="contact-value">github.com/irtazas</div>
+                        </div>
+                    </a>
 
-                    <div class="contact-item">
-                        <div class="contact-label">LINKEDIN</div>
-                        <div class="contact-value"><a href="https://linkedin.com/in/irtaza" target="_blank">linkedin.com/in/irtaza</a></div>
-                    </div>
+                    <a href="https://linkedin.com/in/irtazas" target="_blank" style="text-decoration: none">
+                        <div class="contact-item">
+                            <div class="contact-label">LINKEDIN</div>
+                            <div class="contact-value">linkedin.com/in/irtazas</div>
+                        </div>
+                    </a>
 
                 </div>
             </div>
@@ -1905,6 +1957,8 @@
             </div>
         </div>
     </div>
+
+    <div id="palm-rain-overlay"></div>
 
    <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -2712,6 +2766,70 @@
             lightShow.onclick = () => {
                 lightShow.style.display = 'none';
             };
+
+// --- Palm Rain Logic (v2) ---
+let isRaining = false;
+        const locationBtn = document.getElementById('location-btn');
+        const palmOverlay = document.getElementById('palm-rain-overlay');
+
+        function createPalm() {
+            const palm = document.createElement('div');
+            palm.classList.add('palm-emoji');
+            palm.textContent = '🌴';
+
+            const size = Math.random() * 20 + 15; // 15px to 35px
+            const xPos = Math.random() * 100;    // 0-100vw
+            const fallDuration = Math.random() * 3 + 4; // 4-7s
+            const drift = (Math.random() - 0.5) * 200; // side-to-side drift
+
+            palm.style.fontSize = `${size}px`;
+            palm.style.left = `${xPos}vw`;
+            palm.style.animationDuration = `${fallDuration}s`;
+
+            // Add a simple drift by animating 'left' with a transition
+            palm.style.transition = `transform ${fallDuration * 0.8}s ease-in`;
+
+            palmOverlay.appendChild(palm);
+
+            // Trigger the drift after a tiny delay
+            setTimeout(() => {
+                palm.style.transform = `translateX(${drift}px)`;
+            }, 10);
+
+            // Remove the palm after it has finished falling
+            setTimeout(() => {
+                palm.remove();
+            }, fallDuration * 1000 + 500); // 0.5s buffer
+        }
+
+function startPalmRain() {
+            if (isRaining) return; // <-- 1. ADD THIS CHECK
+            if (!palmOverlay) {
+                console.error("Palm rain overlay not found!");
+                return;
+            }
+
+            isRaining = true; // <-- 2. SET THE FLAG
+            palmOverlay.style.display = 'block';
+
+            // Spawn 100 palms at random intervals over 5 seconds
+            for (let i = 0; i < 100; i++) {
+                setTimeout(createPalm, Math.random() * 5000);
+            }
+
+            // Set a safety timeout to hide the overlay after 12 seconds
+            setTimeout(() => {
+                palmOverlay.style.display = 'none';
+                isRaining = false; // <-- 3. RESET THE FLAG
+            }, 12000);
+        }
+
+        // Add the click listener
+        if (locationBtn) {
+            locationBtn.addEventListener('click', startPalmRain);
+        } else {
+            console.error("Location button not found!");
+        }
 
         });
     </script>
