@@ -57,7 +57,14 @@
             animation: scan 0.5s linear infinite;
             pointer-events: none;
             z-index: 9998;
+            display: none; /* OFF BY DEFAULT */
         }
+
+        /* This class is toggled by JS to turn scanlines ON */
+        body.scanlines-active::after {
+            display: block;
+        }
+
         @keyframes scan {
             0% { background-position: 0 0; }
             100% { background-position: 0 4px; }
@@ -229,9 +236,9 @@
             top: 0;
             left: 0;
             width: 100%;
-            padding: 10px 25px; /* Reduced padding */
-            display: flex;
-            justify-content: space-between;
+            padding: 10px 25px;
+            display: grid; /* Use Grid for layout */
+            grid-template-columns: 1fr auto 1fr; /* Left, Center, Right */
             align-items: center;
             z-index: 1000;
             background: rgba(10, 14, 39, 0.8);
@@ -240,14 +247,38 @@
             box-shadow: 0 0 20px rgba(0, 255, 249, 0.3);
         }
 
-        /* NEW RETRO LOGO SMILEY */
+        /* Container for left item */
+        .nav-left {
+            justify-self: start;
+        }
+
+        /* New TV button style */
+        .nav-tv {
+            font-size: 36px; /* Match smiley */
+            color: var(--neon-orange);
+            text-shadow: 0 0 15px var(--neon-orange);
+            cursor: pointer;
+            transition: all 0.3s;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .nav-tv:hover {
+            transform: scale(1.2);
+        }
+        .nav-tv.active {
+            color: var(--neon-green);
+            text-shadow: 0 0 25px var(--neon-green);
+        }
+
+        /* Smiley logo - now centered by grid */
         .nav-logo-smiley {
-            font-size: 40px; /* Bigger as requested */
+            justify-self: center; /* This centers it in the grid */
+            font-size: 40px;
             color: var(--neon-yellow);
             text-shadow: 0 0 15px var(--neon-yellow);
             cursor: pointer;
             transition: all 0.3s;
-            /* Add user-select none to prevent ugly tap highlight */
             user-select: none;
             -webkit-user-select: none;
             -webkit-tap-highlight-color: transparent;
@@ -261,9 +292,32 @@
             100% { color: var(--neon-cyan); filter: hue-rotate(360deg); }
         }
 
+        /* This is the mobile-safe tap animation */
+        @keyframes spin-happy-mobile {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg) scale(1);
+            }
+            50% {
+                transform: translate(-50%, -50%) rotate(180deg) scale(1.2);
+            }
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg) scale(1);
+            }
+        }
+        /* This class is added by JS on mobile tap */
+        .nav-logo-smiley.tapped {
+            animation: spin-happy-mobile 0.5s linear infinite, rainbow-glow 1s linear infinite;
+        }
+
+        /* Container for right items */
+        .nav-right {
+            justify-self: end;
+            display: flex; /* Use flex to align links and burger */
+            align-items: center;
+        }
 
         .nav-links {
-            display: flex;
+            display: flex; /* Show by default on desktop */
             gap: 25px;
             list-style: none;
             align-items: center;
@@ -342,7 +396,7 @@
             height: 22px;
             position: relative;
             cursor: pointer;
-            display: none;
+            display: none; /* Hidden on desktop */
             z-index: 1002;
         }
         .burger-menu span {
@@ -1321,57 +1375,35 @@
             }
 
             .nav-bar {
-                padding: 10px 15px; /* Slimmer navbar */
-                justify-content: flex-end; /* Burger to the right */
-                position: relative; /* For centering logo */
+                display: flex; /* Revert to flex for simplicity */
+                justify-content: space-between; /* TV left, Burger right */
+                padding: 10px 15px;
+                position: relative; /* For absolute smiley */
             }
 
-            /* Center logo on mobile, make it bigger, stop shift */
+            /* .nav-left and .nav-right are now direct children of flex */
+            .nav-left {
+                justify-self: auto;
+            }
             .nav-logo-smiley {
-                position: absolute;
+                justify-self: auto;
+                position: absolute; /* Absolute center */
                 left: 50%;
-                top: 50%; /* Add top for vertical centering */
-                transform: translate(-50%, -50%); /* Use 2D translate */
-                font-size: 40px; /* Use desktop size */
-                -webkit-tap-highlight-color: transparent; /* Disable tap flash */
-                user-select: none; /* Disable text selection */
+                top: 50%;
+                transform: translate(-50%, -50%);
+            }
+            .nav-right {
+                justify-self: auto;
             }
 
-            /* 1. Define a NEW mobile-safe animation (MUST be outside any other rule) */
-            @keyframes spin-happy-mobile {
-                0% {
-                    transform: translate(-50%, -50%) rotate(0deg) scale(1);
-                }
-                50% {
-                    transform: translate(-50%, -50%) rotate(180deg) scale(1.2);
-                }
-                100% {
-                    transform: translate(-50%, -50%) rotate(360deg) scale(1);
-                }
-            }
-
-            /* 2. Apply the new animation on mobile tap */
-            /* Use .tapped class from JS instead of :active */
-            .nav-logo-smiley.tapped {
-                animation: spin-happy-mobile 0.5s linear infinite, rainbow-glow 1s linear infinite;
-            }
-
-            .nav-logo-smiley:hover {
-                 animation: none; /* Disable standard hover on touch devices */
-            }
-
-
-            /* Hide desktop links on mobile */
-            .nav-links {
+            /* Hide desktop links and show burger */
+            .nav-right .nav-links {
                 display: none;
             }
-            .burger-menu {
+            .nav-right .burger-menu {
                 display: block;
             }
-            /* Show links in mobile overlay */
-            .nav-overlay .nav-links {
-                display: flex;
-            }
+
             .arcade-grid {
                 grid-template-columns: 1fr; /* Stack on mobile */
             }
@@ -1402,25 +1434,30 @@
 
     <div id="main-content">
         <nav class="nav-bar">
+            <div class="nav-left">
+                <div class="nav-tv" id="scanline-toggle" title="Toggle Scanlines">📺</div>
+            </div>
+
             <div class="nav-logo-smiley" id="fun-logo" title="Don't click me!">☺︎</div>
 
-            <ul class="nav-links">
-                <li><a href="#experience">EXPERIENCE</a></li>
-                <li><a href="#skills">SKILLS</a></li>
-                <li><a href="#education">EDUCATION</a></li>
-                <li><a href="#projects">PROJECTS</a></li>
-                <li><a href="#contact">CONTACT</a></li>
-                <li class="terminal-trigger-li">
-                    <button class="terminal-trigger" id="terminal-trigger-nav" title="Open Terminal" data-text=">_">><span class="cursor">_</span></button>
-                </li>
-            </ul>
-            <div class="burger-menu" id="burger-menu">
-                <span></span>
-                <span></span>
-                <span></span>
+            <div class="nav-right">
+                <ul class="nav-links">
+                    <li><a href="#experience">EXPERIENCE</a></li>
+                    <li><a href="#skills">SKILLS</a></li>
+                    <li><a href="#education">EDUCATION</a></li>
+                    <li><a href="#projects">PROJECTS</a></li>
+                    <li><a href="#contact">CONTACT</a></li>
+                    <li class="terminal-trigger-li">
+                        <button class="terminal-trigger" id="terminal-trigger-nav" title="Open Terminal" data-text=">_">><span class="cursor">_</span></button>
+                    </li>
+                </ul>
+                <div class="burger-menu" id="burger-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
             </div>
         </nav>
-
         <div class="nav-overlay" id="nav-overlay">
             <div class="close-icon" id="close-icon">&times;</div>
             <ul class="nav-links">
@@ -1869,7 +1906,7 @@
         </div>
     </div>
 
-    <script>
+   <script>
         document.addEventListener('DOMContentLoaded', () => {
 
             // =========================================
@@ -1882,7 +1919,7 @@
             function type() {
                 if (typingTimeout) clearTimeout(typingTimeout);
                 const currentPhrase = phrases[phraseIndex];
-                typingEl.innerHTML = `> ${currentPhrase.substring(0, isDeleting ? --charIndex : ++charIndex)}<span class.cursor">|</span>`;
+                typingEl.innerHTML = `> ${currentPhrase.substring(0, isDeleting ? --charIndex : ++charIndex)}<span class="cursor">|</span>`;
                 let speed = isDeleting ? 50 : 100;
                 if (!isDeleting && charIndex === currentPhrase.length) { speed = 2000; isDeleting = true; }
                 else if (isDeleting && charIndex === 0) { isDeleting = false; phraseIndex = (phraseIndex + 1) % phrases.length; speed = 500; }
@@ -2057,18 +2094,21 @@
                 });
             }, 50);
 
-            // --- EMOJI GALAXY V8 (Shooting Stars & Moon Fix) ---
+            // --- EMOJI GALAXY V10 (Final + Uniqueness) ---
             const hCanvas = document.getElementById('hero-animation-bg'), hCtx = hCanvas.getContext('2d');
             let staticStars = [], activeFlybys = [], activeShootingStars = [], w, h, starRAF;
             let isHeroVisible = true;
 
             const STARS = ['.', '*', '·'];
-            const ALL_FLYBYS = ['🪐', '🌍', '☄️', '👾', '🚀', '🛸']; // ☀️ removed
+            const EARTH_EMOJIS = ['🌍', '🌎', '🌏'];
+            // Re-define ALL_FLYBYS to use a placeholder
+            const ALL_FLYBYS_TYPES = ['🪐', 'EARTH_PLACEHOLDER', '☄️', '👾', '🚀', '🛸'];
             const NUM_STARS = 150;
             const MAX_ACTIVE_FLYBYS = 2;
             const SPAWN_CHANCE = 0.005; // Increased frequency
-            const SHOOTING_STAR_CHANCE = 0.0050; // Occasional
-            const MAX_SHOOTING_STARS = 20;
+            const SHOOTING_STAR_CHANCE = 0.0006; // Occasional
+            const MAX_SHOOTING_STARS = 2;
+
 
             // Helper to get a random diagonal direction
             function getRandomDiagonal() {
@@ -2091,8 +2131,8 @@
                     s.x = Math.random() * (w / 2) + (w / 2) + s.size; // Start on bottom-right half
                     s.y = h + s.size;
                 } else {
-                    // All others (planets, aliens, earth)
-                    s.direction = getRandomDiagonal();
+                    // All others (planets, aliens, earths)
+                    s.direction = s.direction || getRandomDiagonal(); // Use existing direction if set
                     if (Math.random() > 0.5) {
                         // Start Left/Right
                         s.x = s.direction.x > 0 ? -s.size : w + s.size;
@@ -2152,56 +2192,88 @@
 
                 // 2. Spawn OCCASIONAL Fly-bys
                 if (Math.random() < SPAWN_CHANCE && activeFlybys.length < MAX_ACTIVE_FLYBYS) {
-                    const emoji = ALL_FLYBYS[Math.floor(Math.random() * ALL_FLYBYS.length)];
 
-                    const minSize = 30, maxSize = 80;
-                    const size = Math.random() * (maxSize - minSize) + minSize; // 30px to 80px
-                    const opacity = ( (size - minSize) / (maxSize - minSize) ) * 0.4 + 0.6; // 0.6 to 1.0
+                    // --- Uniqueness Logic ---
+                    // Get all currently active emoji types
+                    const currentEmojiTypes = activeFlybys.map(s => {
+                        if (EARTH_EMOJIS.includes(s.emoji)) return 'EARTH_PLACEHOLDER';
+                        return s.emoji;
+                    });
 
-                    let s = {
-                        emoji: emoji,
-                        size: size,
-                        opacity: opacity,
-                        speed: Math.random() * 2 + 1, // 1 to 3 px/frame
-                        squiggle: null,
-                        children: [] // For moons
-                    };
+                    // Find types that are NOT active
+                    let availableTypes = ALL_FLYBYS_TYPES.filter(type => !currentEmojiTypes.includes(type));
 
-                    // Set Direction & Squiggle based on rules
-                    switch (emoji) {
-                        case '☄️':
-                            s.speed = Math.random() * 5 + 6; // SUPER FAST (6-11 px/frame)
-                            s.size = s.size * 0.5; // Meteors are smaller
-                            break;
-                        case '👾':
-                            s.squiggle = { rate: 0.005, amplitude: Math.random() * 20 + 10 };
-                            break;
-                        case '🌍':
-                            s.size = Math.random() * 20 + 50; // Earth size (50-70px)
-                            s.speed = Math.random() * 1 + 0.5; // Earth is slow
-                            s.children.push({
-                                emoji: '🌕',
-                                size: s.size * 0.5, // Moon half size
-                                orbitRadius: s.size * 1.0 + 20, // INCREASED ORBIT
-                                orbitAngle: Math.random() * Math.PI * 2,
-                                orbitSpeed: 0.05
-                            });
-                            break;
-                        case '🪐':
-                            s.speed = Math.random() * 1 + 0.5; // Saturn is slow
-                             s.children.push({
-                                emoji: '🌕',
-                                size: s.size * 0.4, // Moon half size
-                                orbitRadius: s.size * 0.8 + 15, // Saturn's moon
-                                orbitAngle: Math.random() * Math.PI * 2,
-                                orbitSpeed: 0.03
-                            });
-                            break;
-                        // Rockets, UFOs, just use default random speed/size
+                    if (availableTypes.length > 0) {
+                        let typeToSpawn = availableTypes[Math.floor(Math.random() * availableTypes.length)];
+
+                        let emojiToSpawn;
+                        // If we picked the placeholder, replace it with a random Earth
+                        if (typeToSpawn === 'EARTH_PLACEHOLDER') {
+                            emojiToSpawn = EARTH_EMOJIS[Math.floor(Math.random() * EARTH_EMOJIS.length)];
+                        } else {
+                            emojiToSpawn = typeToSpawn;
+                        }
+                        // --- End Uniqueness Logic ---
+
+                        const minSize = 30, maxSize = 80;
+                        const size = Math.random() * (maxSize - minSize) + minSize; // 30px to 80px
+                        const opacity = ( (size - minSize) / (maxSize - minSize) ) * 0.4 + 0.6; // 0.6 to 1.0
+
+                        let s = {
+                            emoji: emojiToSpawn,
+                            size: size,
+                            opacity: opacity,
+                            speed: Math.random() * 2 + 1, // 1 to 3 px/frame
+                            squiggle: null,
+                            children: [] // For moons
+                        };
+
+                        // Set Direction & Squiggle based on rules
+                        switch (s.emoji) { // Use s.emoji here
+                            case '🚀':
+                            case '🛸':
+                                // Speed/size set, direction set by setStartPosition
+                                break;
+                            case '☄️':
+                                s.speed = Math.random() * 5 + 6; // SUPER FAST (6-11 px/frame)
+                                s.size = s.size * 0.5; // Meteors are smaller
+                                break;
+                            case '👾':
+                                s.direction = getRandomDiagonal();
+                                s.squiggle = { rate: 0.005, amplitude: Math.random() * 20 + 10 };
+                                break;
+
+                            // ALL 3 EARTHS FALL THROUGH HERE
+                            case '🌍':
+                            case '🌎':
+                            case '🌏':
+                                s.direction = getRandomDiagonal(); // Randomized path
+                                s.size = Math.random() * 20 + 50; // Earth size (50-70px)
+                                s.speed = Math.random() * 1 + 0.5; // Earth is slow
+                                s.children.push({
+                                    emoji: '🌕',
+                                    size: s.size * 0.5, // Moon half size
+                                    orbitRadius: s.size * 1.0 + 20, // INCREASED ORBIT
+                                    orbitAngle: Math.random() * Math.PI * 2,
+                                    orbitSpeed: 0.05
+                                });
+                                break;
+                            case '🪐':
+                                s.direction = getRandomDiagonal(); // Randomized path
+                                s.speed = Math.random() * 1 + 0.5; // Saturn is slow
+                                s.children.push({
+                                    emoji: '🌕',
+                                    size: s.size * 0.4, // Moon half size
+                                    orbitRadius: s.size * 0.8 + 15, // Saturn's moon
+                                    orbitAngle: Math.random() * Math.PI * 2,
+                                    orbitSpeed: 0.03
+                                });
+                                break;
+                        }
+
+                        setStartPosition(s); // Set start x,y based on direction
+                        activeFlybys.push(s);
                     }
-
-                    setStartPosition(s); // Set start x,y based on direction
-                    activeFlybys.push(s);
                 }
 
                 // 3. Update & Draw Active Fly-bys
@@ -2566,6 +2638,13 @@
             });
 
             // --- OTHERS ---
+
+            // NEW: Scanline Toggle
+            const scanlineToggle = document.getElementById('scanline-toggle');
+            scanlineToggle.onclick = () => {
+              document.body.classList.toggle('scanlines-active');
+              scanlineToggle.classList.toggle('active');
+            };
 
             // Project Modal JS
             document.querySelectorAll('.project-box').forEach(b => b.onclick = () => {
