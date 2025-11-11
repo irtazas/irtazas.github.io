@@ -254,7 +254,7 @@
 
         /* New TV button style */
         .nav-tv {
-            font-size: 36px; /* Match smiley */
+            font-size: 26px; /* Match smiley */
             color: var(--neon-orange);
             text-shadow: 0 0 15px var(--neon-orange);
             cursor: pointer;
@@ -2183,7 +2183,7 @@
                     let flicker = Math.sin(now * s.flickerRate + s.flickerPhase);
                     let opacity = s.baseOpacity + Math.max(0, flicker * 0.5); // Flicker up
 
-                    hCtx.font = `${s.size}px "Share Tech Mono"`;
+                    hCtx.font = `${s.size}px sans-serif`;
                     hCtx.fillStyle = `rgba(224, 224, 224, ${opacity})`;
                     hCtx.fillText(s.emoji, s.x, s.y);
                 });
@@ -2301,12 +2301,12 @@
                         const moonX = s.x + xOff + Math.cos(moon.orbitAngle) * moon.orbitRadius;
                         const moonY = s.y + yOff + Math.sin(moon.orbitAngle) * moon.orbitRadius;
 
-                        hCtx.font = `${moon.size}px "Share Tech Mono"`;
+                        hCtx.font = `${moon.size}px sans-serif`;
                         hCtx.fillText(moon.emoji, moonX, moonY);
                     });
 
                     // Draw parent (planet/emoji) SECOND
-                    hCtx.font = `${s.size}px "Share Tech Mono"`;
+                    hCtx.font = `${s.size}px sans-serif`;
                     hCtx.fillText(s.emoji, s.x + xOff, s.y + yOff);
 
                     // Remove if way off screen
